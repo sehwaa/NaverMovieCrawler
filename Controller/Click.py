@@ -39,6 +39,10 @@ def beforeOpening():
 def afterOpening():
     driver.find_element_by_id("afterPointTab").click()
 
+#'개봉 후 평점'메뉴 클릭 후 남녀별/연령별 메뉴 클릭
+def genderAndage():
+    driver.find_element_by_xpath("//a[@id='netizen_group']").click()
+
 #'리뷰'탭 클릭
 def reviewTab():
     driver.find_element_by_xpath("//a[@title='리뷰']").click()
