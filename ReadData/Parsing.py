@@ -98,7 +98,7 @@ def beforeOpeningscore():
     except:
         print("국내 개봉 되지 않은 영화입니다")
         
-#[평점] 개봉 후 네티즌 평점 정보 파싱
+#[평점] 개봉 후 네티즌 평점 정보 파싱(총 평점, 점수 분포 정보)
 def afterNetizenOpeningscore():
     try:
         #네티즌 평점 정보 (총 평점 - 별점)
@@ -143,7 +143,7 @@ def afterNetizenOpeningscore():
     except:
         print("네티즌 평점 막대 그래프 정보 없음")
 
-#[평점] 개봉 후 관람객 평점 정보 파싱        
+#[평점] 개봉 후 관람객 평점 정보 파싱 (총 평점, 점수 분포 정보)      
 def afterAudienceOpeningScore():
     try:
         #관람객 평점 정보 (총 평점 - 별점)
@@ -178,7 +178,7 @@ def afterAudienceOpeningScore():
         #리스트 마지막 요소 삭제(선호하는 연령대 데이터)
         del audience_score_graph_list[-1]
         
-        #점수 분포 텍스트 전처리 ('%' 삭제)
+        #점수 분포 텍스트 전처리 ('%' 제거)
         for index in range(0, len(audience_score_graph_list)):
             audience_score_graph_list[index] = audience_score_graph_list[index].replace("%", "")
         
@@ -187,3 +187,110 @@ def afterAudienceOpeningScore():
         
     except:
         print("관람객 평점 막대 그래프 정보 없음")
+        
+#[평점] 개봉 후 네티즌 평점 정보 파싱(남녀별, 연령별)
+def afterNetizenOpeningscore_genderAndage():
+    try:
+        gender_score_text = driver.find_element_by_id("netizen_group_graph")
+        gender_score_graph = gender_score_text.text.split('\n')
+        
+        #남녀 참여율 리스트
+        gender_score_participation_rate = []
+        #남녀 평점 리스트
+        gender_score_star_score = []
+        
+        #연령별 참여율 리스트
+        age_score_participation_rate = []
+        #연령별 평점 리스트
+        age_score_star_score = []   
+             
+        ##파싱 정보 전처리
+        #남녀 참여율 리스트 데이터 채우기
+        male_rate = gender_score_graph[0].replace("%", "") # '%' 제거
+        female_rate = gender_score_graph[1].replace("%", "") # '%' 제거
+        gender_score_participation_rate.append(male_rate) #남자 참여율
+        gender_score_participation_rate.append(female_rate) #여자 참여율
+        
+        #남녀 평점 리스트 데이터 채우기
+        male_score = gender_score_graph[3].replace("평점 ", "") #'평점' 제거
+        female_score = gender_score_graph[5].replace("평점 ", "") #'평점' 제거
+        gender_score_star_score.append(male_score) #남자 평점
+        gender_score_star_score.append(female_score) #여자 평점
+        
+        print(gender_score_participation_rate)
+        print(gender_score_star_score)
+        
+        #연령대 평점 임시 리스트
+        age_score_star_score_temp = []
+        
+        #연령대 평점 리스트 데이터 채우기(10대, 20대, 30대, 40대 이상 순)
+        for index in range(7, 15):
+            age_score_star_score_temp.append(gender_score_graph[index])
+        #필요없는 데이터 제거
+        for index in range(0, len(age_score_star_score_temp)):
+            if index % 2 != 0 :
+                age_score_star_score.append(age_score_star_score_temp[index].replace("평점 ", ""))#'평점' 제거          
+    
+        print(age_score_star_score)
+        
+        #연령대 참여율 리스트 데이터 채우기(10대, 20대, 30대, 40대 이상 순)
+        for index in range(15, 19):
+            age_score_participation_rate.append(gender_score_graph[index].replace("%", ""))#'%' 제거
+        
+        print(age_score_participation_rate)
+    except:
+        print("남녀별, 연령별 평점 정보 없음")
+
+        
+#[평점] 개봉 후 관람객 평점 정보 파싱(남녀별, 연령별)
+def afterAudienceOpeningscore_genderAndage():
+    try:
+        gender_score_text = driver.find_element_by_id("actual_group_graph")
+        gender_score_graph = gender_score_text.text.split('\n')
+
+        #남녀 참여율 리스트
+        gender_score_participation_rate = []
+        #남녀 평점 리스트
+        gender_score_star_score = []
+        
+        #연령별 참여율 리스트
+        age_score_participation_rate = []
+        #연령별 평점 리스트
+        age_score_star_score = []
+        
+        ##파싱 정보 전처리
+        #남녀 참여율 리스트 데이터 채우기
+        male_rate = gender_score_graph[0].replace("%", "") # '%' 제거
+        female_rate = gender_score_graph[1].replace("%", "") # '%' 제거
+        gender_score_participation_rate.append(male_rate) #남자 참여율
+        gender_score_participation_rate.append(female_rate) #여자 참여율
+        
+        #남녀 평점 리스트 데이터 채우기
+        male_score = gender_score_graph[3].replace("평점 ", "") #'평점' 제거
+        female_score = gender_score_graph[5].replace("평점 ", "") #'평점' 제거
+        gender_score_star_score.append(male_score) #남자 평점
+        gender_score_star_score.append(female_score) #여자 평점
+        
+        print(gender_score_participation_rate)
+        print(gender_score_star_score)
+        
+        #연령대 평점 임시 리스트
+        age_score_star_score_temp = []
+        
+        #연령대 평점 리스트 데이터 채우기(10대, 20대, 30대, 40대 이상 순)
+        for index in range(7, 15):
+            age_score_star_score_temp.append(gender_score_graph[index])
+        #필요없는 데이터 제거
+        for index in range(0, len(age_score_star_score_temp)):
+            if index % 2 != 0 :
+                age_score_star_score.append(age_score_star_score_temp[index].replace("평점 ", ""))#'평점' 제거          
+    
+        print(age_score_star_score)
+        
+        #연령대 참여율 리스트 데이터 채우기(10대, 20대, 30대, 40대 이상 순)
+        for index in range(15, 19):
+            age_score_participation_rate.append(gender_score_graph[index].replace("%", ""))#'%' 제거
+        
+        print(age_score_participation_rate)
+    except:
+        print("남녀별, 연령별 평점 정보 없음")
