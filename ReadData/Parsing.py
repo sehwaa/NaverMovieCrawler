@@ -42,14 +42,8 @@ def agency():
             distributor_test = None
             
         #제작사 / 수입사 / 배급사 데이터 저장
-        if producer_test is not None and importer_test is not None and distributor_test is not None :
-            producer = agency_text.split('\n')[0]
-            importer = agency_text.split('\n')[1]
-            distributor = agency_text.split('\n')[2]
-            print("제작사 : " + producer)
-            print("수입사 : " + importer)
-            print("배급사 : " + distributor)
-        elif producer_test is not None and importer_test is not None and distributor_test is None:
+
+        if producer_test is not None and importer_test is not None and distributor_test is None:
             producer = agency_text.split('\n')[0]
             importer = agency_text.split('\n')[1]
             print("제작사 : " + producer)
@@ -62,6 +56,13 @@ def agency():
         elif producer_test is None and importer_test is not None and distributor_test is not None:
             importer = agency_text.split('\n')[0]
             distributor = agency_text.split('\n')[1]
+            print("수입사 : " + importer)
+            print("배급사 : " + distributor)
+        elif producer_test is not None and importer_test is not None and distributor_test is not None :
+            producer = agency_text.split('\n')[0]
+            importer = agency_text.split('\n')[1]
+            distributor = agency_text.split('\n')[2]
+            print("제작사 : " + producer)
             print("수입사 : " + importer)
             print("배급사 : " + distributor)
         elif producer_test is not None and importer_test is None and distributor_test is None:
