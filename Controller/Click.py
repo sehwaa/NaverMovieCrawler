@@ -13,11 +13,7 @@ def submitBtn():
 
 #자동 완성 리스트 클릭
 def autoCompletementList(movieName):
-    try:
-        driver.find_element_by_xpath("//li[@data-title='"+movieName+"']").click()
-    #자동 완성되는 리스트가 없을 경우 예외 처리
-    except:
-        return 0
+    driver.find_element_by_xpath("//li[@data-title='"+movieName+"']").click()
 
 #'주요 정보'탭 클릭
 def mainInformationTab():
