@@ -9,7 +9,65 @@ from Connection.Connection import driver
 import selenium
 from selenium.common.exceptions import NoSuchAttributeException,\
     NoSuchElementException
+from itertools import accumulate
 
+#[요약정보] 요약정보 파싱
+def summary():
+    summary_text = driver.find_element_by_xpath("//dl[@class='info_spec']")
+    #필요없는 데이터 제거(속도 저하 방지) 및 summary_text 전처리
+    if summary_text.text.find("더보기") != -1 :
+        summary_text_modify = summary_text.text.replace("\n더보기", "")
+    else : 
+        summary_list = summary_text.text.split('\n')
+        
+    if summary_text.text.find("누적관객누적관객 도움말") != -1 :
+        summary_text_modify_2 = summary_text_modify.replace("\n누적관객누적관객 도움말", "") 
+        summary_list = summary_text_modify_2.split('\n')
+    else :
+        summary_list = summary_text.text.split('\n')
+    
+    ###개요 정보
+    ##전처리
+    outline = summary_list[0]
+    outline_modify = outline.replace(", ", ",")
+    outline_modify_2 = outline_modify.replace(" .", ".")
+    outline_modify_3 = outline_modify_2.replace(" 개봉", "개봉")
+    outline_list = outline_modify_3.split(' ')
+    
+    ##장르 / 국적 / 러닝타임 / 개봉날짜 구분
+    for index in range(0, len(outline_list)):
+        #장르 구분
+        if outline_list[index].find("공포") != -1 :
+            genre = outline_list[index]
+            print("장르 : " + genre)
+        #러닝타임 구분
+        elif outline_list[index].find("분") != -1 :
+            runningTime = outline_list[index]
+            print("러닝타임 : " + runningTime.replace("분", ""))
+        #개봉날짜 구분
+        elif outline_list[index].find("개봉") != -1 :
+            openingDate = outline_list[index]
+            print("개봉날짜 : " + openingDate.replace("개봉", ""))
+        else :
+            nation = outline_list[index]
+            print("국적 : " + nation)     
+    
+    #감독 구분
+    director = summary_list[1]
+    print("감독 : " + director)
+    
+    #개요, 감독 정보 삭제(속도 저하 방지)
+    del summary_list[0:1]
+     
+    ##등급 / 누적관객 수 구분
+    for index in range(0, len(summary_list)):
+        if summary_list[index].find("[국내]") != -1 or summary_list[index].find("[해외]") != -1 :
+            grade = summary_list[index]
+            print("등급 : " + grade)
+        elif summary_list[index].find("명") != -1 :
+            accumulate_audience = summary_list[index]
+            print("누적관객 수 : " + accumulate_audience)
+        
 #[배우/제작진] 제작사/수입사/배급사 파싱
 def agency():
     try:
