@@ -32,13 +32,13 @@ class Connection_DB_Insert:
     def __init__(self, movieName):
         self.movieName = movieName  
         
-        #DB에 데이터 삽입하기 (장르)
+    #DB에 데이터 삽입하기 (장르)
     def insert_Data_genre(self,genre):
         try:
             conn = pymysql.connect(host='localhost', user='root', port=3306, db='movie', charset='utf8')
             with conn.cursor() as cursor:
-                sql = 'INSERT INTO movie_list (movie_genre) VALUES (%s) WHERE movie_genre="' +self.movieName + '"'
-                cursor.execute(sql, (genre))
+                sql = 'UPDATE movie_list SET movie_genre ="'+genre+'"'+' WHERE movie_name="' +self.movieName + '\n"'
+                cursor.execute(sql)
             conn.commit()
         except Exception as ex:
             print(ex)
@@ -50,10 +50,9 @@ class Connection_DB_Insert:
         try:
             conn = pymysql.connect(host='localhost', user='root', port=3306, db='movie', charset='utf8')
             with conn.cursor() as cursor:
-                sql = 'INSERT INTO movie_list (movie_nation) VALUES (%s) WHERE movie_genre="' +self.movieName + '"'
-                cursor.execute(sql, (nation))
-                result = cursor.fetchall()
-                return result
+                sql = 'UPDATE movie_list SET movie_nation="'+nation+'"'+' WHERE movie_name="' +self.movieName + '\n"'
+                cursor.execute(sql)
+            conn.commit()
         except Exception as ex:
             print(ex)
         finally:
@@ -64,10 +63,9 @@ class Connection_DB_Insert:
         try:
             conn = pymysql.connect(host='localhost', user='root', port=3306, db='movie', charset='utf8')
             with conn.cursor() as cursor:
-                sql = 'INSERT INTO movie_list (movie_runningTime) VALUES (%s) WHERE movie_genre="' +self.movieName + '"'
-                cursor.execute(sql, (runningTime))
-                result = cursor.fetchall()
-                return result
+                sql = 'UPDATE movie_list SET movie_runningTime="'+runningTime+'"'+'WHERE movie_name="' +self.movieName + '\n"'
+                cursor.execute(sql)
+            conn.commit()
         except Exception as ex:
             print(ex)
         finally:
@@ -78,10 +76,9 @@ class Connection_DB_Insert:
         try:
             conn = pymysql.connect(host='localhost', user='root', port=3306, db='movie', charset='utf8')
             with conn.cursor() as cursor:
-                sql = 'INSERT INTO movie_list (movie_opening_date) VALUES (%s) WHERE movie_genre="' +self.movieName + '"'
-                cursor.execute(sql, (openingDate))
-                result = cursor.fetchall()
-                return result
+                sql = 'UPDATE movie_list SET movie_opening_date="'+openingDate+'"'+' WHERE movie_name="' +self.movieName + '\n"'
+                cursor.execute(sql)
+            conn.commit()
         except Exception as ex:
             print(ex)    
         finally:
@@ -92,10 +89,9 @@ class Connection_DB_Insert:
         try:
             conn = pymysql.connect(host='localhost', user='root', port=3306, db='movie', charset='utf8')
             with conn.cursor() as cursor:
-                sql = 'INSERT INTO movie_list (movie_director) VALUES (%s) WHERE movie_genre="' +self.movieName + '"'
-                cursor.execute(sql, (director))
-                result = cursor.fetchall()
-                return result
+                sql = 'UPDATE movie_list SET movie_director="'+director+'"'+' WHERE movie_name="' +self.movieName + '\n"'
+                cursor.execute(sql)
+            conn.commit()
         except Exception as ex:
             print(ex)
         finally:
@@ -106,10 +102,9 @@ class Connection_DB_Insert:
         try:
             conn = pymysql.connect(host='localhost', user='root', port=3306, db='movie', charset='utf8')
             with conn.cursor() as cursor:
-                sql = 'INSERT INTO movie_list (movie_grade) VALUES (%s) WHERE movie_genre="' +self.movieName + '"'
-                cursor.execute(sql, (grade))
-                result = cursor.fetchall()
-                return result
+                sql = 'UPDATE movie_list SET movie_grade="'+grade+'"'+' WHERE movie_name="' +self.movieName + '\n"'
+                cursor.execute(sql)
+            conn.commit()
         except Exception as ex:
             print(ex)
         finally:
@@ -120,10 +115,9 @@ class Connection_DB_Insert:
         try:
             conn = pymysql.connect(host='localhost', user='root', port=3306, db='movie', charset='utf8')
             with conn.cursor() as cursor:
-                sql = 'INSERT INTO movie_list (movie_audience) VALUES (%s) WHERE movie_genre="' +self.movieName + '"'
-                cursor.execute(sql, (audience))
-                result = cursor.fetchall()
-                return result
+                sql = 'UPDATE movie_list SET movie_audience="'+audience+'"'+' WHERE movie_name="' +self.movieName + '\n"'
+                cursor.execute(sql)
+            conn.commit()
         except Exception as ex:
             print(ex)
         finally:
@@ -134,10 +128,9 @@ class Connection_DB_Insert:
         try:
             conn = pymysql.connect(host='localhost', user='root', port=3306, db='movie', charset='utf8')
             with conn.cursor() as cursor:
-                sql = 'INSERT INTO movie_list (movie_producer) VALUES (%s) WHERE movie_genre="' +self.movieName + '"'
-                cursor.execute(sql, (producer))
-                result = cursor.fetchall()
-                return result
+                sql = 'UPDATE movie_list SET movie_producer="'+producer+'"'+' WHERE movie_name="' +self.movieName + '\n"'
+                cursor.execute(sql)
+            conn.commit()
         except Exception as ex:
             print(ex)
         finally:
@@ -148,10 +141,9 @@ class Connection_DB_Insert:
         try:
             conn = pymysql.connect(host='localhost', user='root', port=3306, db='movie', charset='utf8')
             with conn.cursor() as cursor:
-                sql = 'INSERT INTO movie_list (movie_importer) VALUES (%s) WHERE movie_genre="' +self.movieName + '"'
-                cursor.execute(sql, (importer))
-                result = cursor.fetchall()
-                return result
+                sql = 'UPDATE movie_list SET movie_importer="'+importer+'"'+' WHERE movie_name="' +self.movieName + '\n"'
+                cursor.execute(sql)
+            conn.commit()
         except Exception as ex:
             print(ex)
         finally:
@@ -162,10 +154,9 @@ class Connection_DB_Insert:
         try:
             conn = pymysql.connect(host='localhost', user='root', port=3306, db='movie', charset='utf8')
             with conn.cursor() as cursor:
-                sql = 'INSERT INTO movie_list (movie_distributor) VALUES (%s) WHERE movie_genre="' +self.movieName + '"'
-                cursor.execute(sql, (distributor))
-                result = cursor.fetchall()
-                return result
+                sql = 'UPDATE movie_list SET movie_distributor="'+distributor+'"'+' WHERE movie_name="' +self.movieName + '\n"'
+                cursor.execute(sql)
+            conn.commit()
         except Exception as ex:
             print(ex)
         finally:
@@ -176,10 +167,9 @@ class Connection_DB_Insert:
         try:
             conn = pymysql.connect(host='localhost', user='root', port=3306, db='movie', charset='utf8')
             with conn.cursor() as cursor:
-                sql = 'INSERT INTO movie_list (before_like) VALUES (%s) WHERE movie_genre="' +self.movieName + '"'
-                cursor.execute(sql, (like))
-                result = cursor.fetchall()
-                return result
+                sql = 'UPDATE movie_list SET before_like="'+like+'"'+' WHERE movie_name="' +self.movieName + '\n"'
+                cursor.execute(sql)
+            conn.commit()
         except Exception as ex:
             print(ex)
         finally:
@@ -190,10 +180,9 @@ class Connection_DB_Insert:
         try:
             conn = pymysql.connect(host='localhost', user='root', port=3306, db='movie', charset='utf8')
             with conn.cursor() as cursor:
-                sql = 'INSERT INTO movie_list (before_dislike) VALUES (%s) WHERE movie_genre="' +self.movieName + '"'
-                cursor.execute(sql, (dislike))
-                result = cursor.fetchall()
-                return result
+                sql = 'UPDATE movie_list SET before_dislike="'+dislike+'"'+' WHERE movie_name="' +self.movieName + '\n"'
+                cursor.execute(sql)
+            conn.commit()
         except Exception as ex:
             print(ex)
         finally:
@@ -204,10 +193,9 @@ class Connection_DB_Insert:
         try:
             conn = pymysql.connect(host='localhost', user='root', port=3306, db='movie', charset='utf8')
             with conn.cursor() as cursor:
-                sql = 'INSERT INTO movie_list (before_netizen_score) VALUES (%s) WHERE movie_genre="' +self.movieName + '"'
-                cursor.execute(sql, (score))
-                result = cursor.fetchall()
-                return result
+                sql = 'UPDATE movie_list SET before_netizen_score="'+score+'"'+' WHERE movie_name="' +self.movieName + '\n"'
+                cursor.execute(sql)
+            conn.commit()
         except Exception as ex:
             print(ex)
         finally:
@@ -218,10 +206,9 @@ class Connection_DB_Insert:
         try:
             conn = pymysql.connect(host='localhost', user='root', port=3306, db='movie', charset='utf8')
             with conn.cursor() as cursor:
-                sql = 'INSERT INTO movie_list (before_netizen_participate) VALUES (%s) WHERE movie_genre="' +self.movieName + '"'
-                cursor.execute(sql, (participate))
-                result = cursor.fetchall()
-                return result
+                sql = 'UPDATE movie_list SET before_netizen_participate="'+participate+'"'+' WHERE movie_name="' +self.movieName + '\n"'
+                cursor.execute(sql)
+            conn.commit()
         except Exception as ex:
             print(ex)
         finally:
@@ -232,10 +219,9 @@ class Connection_DB_Insert:
         try:
             conn = pymysql.connect(host='localhost', user='root', port=3306, db='movie', charset='utf8')
             with conn.cursor() as cursor:
-                sql = 'INSERT INTO movie_list (after_netizen_score) VALUES (%s) WHERE movie_genre="' +self.movieName + '"'
-                cursor.execute(sql, score)
-                result = cursor.fetchall()
-                return result
+                sql = 'UPDATE movie_list SET after_netizen_score="'+score+'"'+' WHERE movie_name="' +self.movieName + '\n"'
+                cursor.execute(sql)
+            conn.commit()
         except Exception as ex:
             print(ex)
         finally:
@@ -246,10 +232,9 @@ class Connection_DB_Insert:
         try:
             conn = pymysql.connect(host='localhost', user='root', port=3306, db='movie', charset='utf8')
             with conn.cursor() as cursor:
-                sql = 'INSERT INTO movie_list (after_netizen_participate) VALUES (%s) WHERE movie_genre="' +self.movieName + '"'
-                cursor.execute(sql, (participate))
-                result = cursor.fetchall()
-                return result
+                sql = 'UPDATE movie_list SET after_netizen_participate="'+participate+'"'+' WHERE movie_name="' +self.movieName + '\n"'
+                cursor.execute(sql)
+            conn.commit()
         except Exception as ex:
             print(ex)
         finally:
@@ -262,10 +247,9 @@ class Connection_DB_Insert:
             with conn.cursor() as cursor:
                 for index in range(0, len(distribution)):
                     point = index + 1
-                    sql = 'INSERT INTO movie_list (after_netizen_distribution_'+point+') VALUES (%s) WHERE movie_genre="' +self.movieName + '"'
-                    cursor.execute(sql, (distribution[index]))
-                    result = cursor.fetchall()
-                    return result
+                    sql = 'UPDATE movie_list SET after_netizen_distribution_'+str(point)+'="'+distribution[index]+'"'+' WHERE movie_name="' +self.movieName + '\n"'
+                    cursor.execute(sql)
+            conn.commit()
         except Exception as ex:
             print(ex)
         finally:
@@ -276,10 +260,9 @@ class Connection_DB_Insert:
         try:
             conn = pymysql.connect(host='localhost', user='root', port=3306, db='movie', charset='utf8')
             with conn.cursor() as cursor:
-                sql = 'INSERT INTO movie_list (after_netizen_favorite_group) VALUES (%s) WHERE movie_genre="' +self.movieName + '"'
-                cursor.execute(sql, (favorite))
-                result = cursor.fetchall()
-                return result
+                sql = 'UPDATE movie_list SET after_netizen_favorite_group="'+favorite+'"'+' WHERE movie_name="' +self.movieName + '\n"'
+                cursor.execute(sql)
+            conn.commit()
         except Exception as ex:
             print(ex)
         finally:
@@ -291,10 +274,9 @@ class Connection_DB_Insert:
             conn = pymysql.connect(host='localhost', user='root', port=3306, db='movie', charset='utf8')
             with conn.cursor() as cursor:
                 for index in range(0, len(participate)):
-                    sql = 'INSERT INTO movie_list (after_netizen_gender_participate_'+index+') VALUES (%s) WHERE movie_genre="' +self.movieName + '"'
-                    cursor.execute(sql, participate[index])
-                    result = cursor.fetchall()
-                    return result
+                    sql = 'UPDATE movie_list SET after_netizen_gender_participate_'+str(index)+'="'+participate[index]+'"'+' WHERE movie_name="' +self.movieName + '\n"'
+                    cursor.execute(sql)
+            conn.commit()
         except Exception as ex:
             print(ex)
         finally:
@@ -306,10 +288,9 @@ class Connection_DB_Insert:
             conn = pymysql.connect(host='localhost', user='root', port=3306, db='movie', charset='utf8')
             with conn.cursor() as cursor:
                 for index in range(0, len(score)):
-                    sql = 'INSERT INTO movie_list (after_netizen_gender_score_'+index+') VALUES (%s) WHERE movie_genre="' +self.movieName + '"'
-                    cursor.execute(sql, (score[index]))
-                    result = cursor.fetchall()
-                    return result
+                    sql = 'UPDATE movie_list SET after_netizen_gender_score_'+str(index)+'="'+score[index]+'"'+' WHERE movie_name="' +self.movieName + '\n"'
+                    cursor.execute(sql)
+            conn.commit()
         except Exception as ex:
             print(ex)
         finally:
@@ -322,10 +303,9 @@ class Connection_DB_Insert:
             with conn.cursor() as cursor:
                 for index in range(0, len(score)):
                     age = (index + 1)*10
-                    sql = 'INSERT INTO movie_list (after_netizen_age_score_'+age+') VALUES (%s) WHERE movie_genre="' +self.movieName + '"'
-                    cursor.execute(sql, (score[index]))
-                    result = cursor.fetchall()
-                    return result
+                    sql = 'UPDATE movie_list SET after_netizen_age_score_'+str(age)+'="'+score[index]+'"'+' WHERE movie_name="' +self.movieName + '\n"'
+                    cursor.execute(sql)
+            conn.commit()
         except Exception as ex:
             print(ex)
         finally:
@@ -338,10 +318,9 @@ class Connection_DB_Insert:
             with conn.cursor() as cursor:
                 for index in range(0, len(participate)):
                     age = (index + 1) * 10
-                    sql = 'INSERT INTO movie_list (after_netizen_age_participate_'+age+') VALUES (%s) WHERE movie_genre="' +self.movieName + '"'
-                    cursor.execute(sql, (participate))
-                    result = cursor.fetchall()
-                    return result
+                    sql = 'UPDATE movie_list SET after_netizen_age_participate_'+str(age)+'="'+participate[index]+'"'+' WHERE movie_name="' +self.movieName + '\n"'
+                    cursor.execute(sql)
+            conn.commit()
         except Exception as ex:
             print(ex)   
         finally:
@@ -352,10 +331,9 @@ class Connection_DB_Insert:
         try:
             conn = pymysql.connect(host='localhost', user='root', port=3306, db='movie', charset='utf8')
             with conn.cursor() as cursor:
-                sql = 'INSERT INTO movie_list (after_audience_score) VALUES (%s) WHERE movie_genre="' +self.movieName + '"'
-                cursor.execute(sql, (score))
-                result = cursor.fetchall()
-                return result
+                sql = 'UPDATE movie_list SET after_audience_score="'+score+'"'+' WHERE movie_name="' +self.movieName + '\n"'
+                cursor.execute(sql)
+            conn.commit()
         except Exception as ex:
             print(ex)
         finally:
@@ -366,10 +344,9 @@ class Connection_DB_Insert:
         try:
             conn = pymysql.connect(host='localhost', user='root', port=3306, db='movie', charset='utf8')
             with conn.cursor() as cursor:
-                sql = 'INSERT INTO movie_list (after_audience_participate) VALUES (%s) WHERE movie_genre="' +self.movieName + '"'
-                cursor.execute(sql, (participate))
-                result = cursor.fetchall()
-                return result
+                sql = 'UPDATE movie_list SET after_audience_participate="'+participate+'"'+' WHERE movie_name="' +self.movieName + '\n"'
+                cursor.execute(sql)
+            conn.commit()
         except Exception as ex:
             print(ex)
         finally:
@@ -382,10 +359,9 @@ class Connection_DB_Insert:
             with conn.cursor() as cursor:
                 for index in range(0, len(distribution)):
                     point = index + 1
-                    sql = 'INSERT INTO movie_list (after_audience_distribution_'+point+') VALUES (%s) WHERE movie_genre="' +self.movieName + '"'
-                    cursor.execute(sql, (distribution[index]))
-                    result = cursor.fetchall()
-                    return result
+                    sql = 'UPDATE movie_list SET after_audience_distribution_'+str(point)+'="'+distribution[index]+'"'+' WHERE movie_name="' +self.movieName + '\n"'
+                    cursor.execute(sql)
+            conn.commit()
         except Exception as ex:
             print(ex)  
         finally:
@@ -396,10 +372,9 @@ class Connection_DB_Insert:
         try:
             conn = pymysql.connect(host='localhost', user='root', port=3306, db='movie', charset='utf8')
             with conn.cursor() as cursor:
-                sql = 'INSERT INTO movie_list (after_audience_favorite_group) VALUES (%s) WHERE movie_genre="' +self.movieName + '"'
-                cursor.execute(sql, favorite)
-                result = cursor.fetchall()
-                return result
+                sql = 'UPDATE movie_list SET after_audience_favorite_group="'+favorite+'"'+' WHERE movie_name="' +self.movieName + '\n"'
+                cursor.execute(sql)
+            conn.commit()
         except Exception as ex:
             print(ex)
         finally:
@@ -411,10 +386,9 @@ class Connection_DB_Insert:
             conn = pymysql.connect(host='localhost', user='root', port=3306, db='movie', charset='utf8')
             with conn.cursor() as cursor:
                 for index in range(0, len(score)):
-                    sql = 'INSERT INTO movie_list (after_audience_gender_participate_'+index+') VALUES (%s) WHERE movie_genre="' +self.movieName + '"'
-                    cursor.execute(sql, (score[index]))
-                    result = cursor.fetchall()
-                    return result
+                    sql = 'UPDATE movie_list SET after_audience_gender_participate_'+str(index)+'="'+score[index]+'"'+' WHERE movie_name="' +self.movieName + '\n"'
+                    cursor.execute(sql)
+            conn.commit()
         except Exception as ex:
             print(ex)
         finally:
@@ -426,10 +400,9 @@ class Connection_DB_Insert:
             conn = pymysql.connect(host='localhost', user='root', port=3306, db='movie', charset='utf8')
             with conn.cursor() as cursor:
                 for index in range(0, len(score)):
-                    sql = 'INSERT INTO movie_list (after_audience_gender_score_'+index+') VALUES (%s) WHERE movie_genre="' +self.movieName + '"'
-                    cursor.execute(sql, (score[index]))
-                    result = cursor.fetchall()
-                    return result
+                    sql = 'UPDATE movie_list SET after_audience_gender_score_'+str(index)+'="'+score[index]+'"'+' WHERE movie_name="' +self.movieName + '\n"'
+                    cursor.execute(sql)
+            conn.commit()
         except Exception as ex:
             print(ex)
         finally:
@@ -442,10 +415,9 @@ class Connection_DB_Insert:
             with conn.cursor() as cursor:
                 for index in range(0, len(score)):
                     age = (index + 1)*10
-                    sql = 'INSERT INTO movie_list (after_audience_age_score_'+age+') VALUES (%s) WHERE movie_genre="' +self.movieName + '"'
-                    cursor.execute(sql, (score[index]))
-                    result = cursor.fetchall()
-                    return result
+                    sql = 'UPDATE movie_list SET after_audience_age_score_'+str(age)+'="'+score[index]+'"'+' WHERE movie_name="' +self.movieName + '\n"'
+                    cursor.execute(sql)
+            conn.commit()
         except Exception as ex:
             print(ex)
         finally:
@@ -457,11 +429,12 @@ class Connection_DB_Insert:
             conn = pymysql.connect(host='localhost', user='root', port=3306, db='movie', charset='utf8')
             with conn.cursor() as cursor:
                 for index in range(0, len(participate)):
-                    age = (index + 1)*10
-                    sql = 'INSERT INTO movie_list (after_audience_age_participate_'+age+') VALUES (%s) WHERE movie_genre="' +self.movieName + '"'
-                    cursor.execute(sql, (participate[index]))
-                    result = cursor.fetchall()
-                    return result
+                    age = (index+1) * 10
+                    print(index)
+                    print(participate[index])
+                    sql = 'UPDATE movie_list SET after_audience_age_participate_'+str(age)+'="'+participate[index]+'"'+' WHERE movie_name="' +self.movieName + '\n"'
+                    cursor.execute(sql)
+            conn.commit()
         except Exception as ex:
             print(ex)  
         finally:
