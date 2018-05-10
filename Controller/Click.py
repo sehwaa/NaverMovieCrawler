@@ -6,6 +6,8 @@ Created on 2018. 5. 3.
 #coding: utf-8
 
 from Connection.Connection import driver
+from selenium.common.exceptions import StaleElementReferenceException
+from selenium.webdriver.support.wait import WebDriverWait
 
 #검색 버튼 클릭
 def submitBtn():
@@ -13,7 +15,9 @@ def submitBtn():
 
 #자동 완성 리스트 클릭
 def autoCompletementList(movieName):
-    driver.find_element_by_xpath("//li[@data-title='"+movieName+"']").click()
+    driver.implicitly_wait(5)
+    element = driver.find_element_by_xpath("//li[@data-title='"+movieName+"']")
+    element.click()
 
 #'주요 정보'탭 클릭
 def mainInformationTab():
@@ -46,7 +50,3 @@ def audienceScore():
 #'관람객 평점' 탭 클릭 후 '남녀별/연령별' 메뉴 클릭
 def audienceGenderAndAge():
     driver.find_element_by_xpath("//a[@id='actual_group']").click()
-    
-#'리뷰'탭 클릭
-def reviewTab():
-    driver.find_element_by_xpath("//a[@title='리뷰']").click()
