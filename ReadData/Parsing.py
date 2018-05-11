@@ -50,33 +50,33 @@ class Parsing:
         outline_modify = outline.replace(", ", ",")
         outline_modify_2 = outline_modify.replace(" .", ".")
         outline_modify_3 = outline_modify_2.replace(" 개봉", "개봉")
-        outline_list = outline_modify_3.split(' ')
+        outline_modify_4 = outline_modify_3.replace(" ,", ",")
+        outline_list = outline_modify_4.split(' ')
         
         ##장르 / 국적 / 러닝타임 / 개봉날짜 구분
         for index in range(0, len(outline_list)):
             #장르 구분
             if outline_list[index].find("공포") != -1 :
                 genre = outline_list[index]
-                print("장르 : " + genre)
+                #print("장르 : " + genre)
                 
             #러닝타임 구분
             elif outline_list[index].find("분") != -1 :
                 runningTime = outline_list[index]
-                print("러닝타임 : " + runningTime.replace("분", ""))
+                #print("러닝타임 : " + runningTime.replace("분", ""))
                 
             #개봉날짜 구분
             elif outline_list[index].find("개봉") != -1 :
                 openingDate = outline_list[index]
-                print("개봉날짜 : " + openingDate.replace("개봉", ""))
+                #print("개봉날짜 : " + openingDate.replace("개봉", ""))
                 
             else :
                 nation = outline_list[index]
-                print("국적 : " + nation)    
+                #print("국적 : " + nation)    
         
         #감독 구분
         director = summary_list[1]
-        print("감독 : " + director)
-        
+        #print("감독 : " + director)
         
         #개요, 감독 정보 삭제(속도 저하 방지)
         del summary_list[0:1]
@@ -85,11 +85,11 @@ class Parsing:
         for index in range(0, len(summary_list)):
             if summary_list[index].find("[국내]") != -1 or summary_list[index].find("[해외]") != -1 :
                 grade = summary_list[index]
-                print("등급 : " + grade)
+                #print("등급 : " + grade)
                 
             elif summary_list[index].find("명") != -1 :
                 accumulate_audience = summary_list[index]
-                print("누적관객 수 : " + accumulate_audience)
+                #print("누적관객 수 : " + accumulate_audience)
 
         return_summary_list.append(genre)
         return_summary_list.append(runningTime)
@@ -120,7 +120,7 @@ class Parsing:
                 if producer_text == [] :
                     producer_text = None
             except NoSuchElementException:
-                print("제작사 없음")
+                #print("제작사 없음")
                 producer_text = None
             
             try:
@@ -128,7 +128,7 @@ class Parsing:
                 if importer_text == []:
                     importer_text = None
             except NoSuchElementException:
-                print("수입사 없음")
+                #print("수입사 없음")
                 importer_text = None 
                 
             try:
@@ -136,41 +136,41 @@ class Parsing:
                 if distributor_text == []:
                     distributor_text = None
             except NoSuchElementException:
-                print("배급사 없음")
+                #print("배급사 없음")
                 distributor_text = None
                 
             #제작사 / 수입사 / 배급사 데이터 저장
             if producer_text is not None and importer_text is None and distributor_text is not None:
                 producer = agency_text.split('\n')[0]
                 distributor = agency_text.split('\n')[1]
-                print("제작사 : " + producer)
-                print("배급사: " + distributor)
+                #print("제작사 : " + producer)
+                #print("배급사: " + distributor)
             elif producer_text is not None and importer_text is not None and distributor_text is None:
                 producer = agency_text.split('\n')[0]
                 importer = agency_text.split('\n')[1]
-                print("제작사 : " + producer)
-                print("수입사 : " + importer)
+                #print("제작사 : " + producer)
+                #print("수입사 : " + importer)
             elif producer_text is None and importer_text is not None and distributor_text is not None:
                 importer = agency_text.split('\n')[0]
                 distributor = agency_text.split('\n')[1]
-                print("수입사 : " + importer)
-                print("배급사 : " + distributor)
+                #print("수입사 : " + importer)
+                #print("배급사 : " + distributor)
             elif producer_text is not None and importer_text is not None and distributor_text is not None :
                 producer = agency_text.split('\n')[0]
                 importer = agency_text.split('\n')[1]
                 distributor = agency_text.split('\n')[2]
-                print("제작사 : " + producer)
-                print("수입사 : " + importer)
-                print("배급사 : " + distributor)
+                #print("제작사 : " + producer)
+                #print("수입사 : " + importer)
+                #print("배급사 : " + distributor)
             elif producer_text is not None and importer_text is None and distributor_text is None:
                 producer = agency_text
-                print("제작사 : " + producer)
+                #print("제작사 : " + producer)
             elif producer_text is None and importer_text is not None and distributor_text is None:
                 importer = agency_text
-                print("수입사 : " + importer)
+                #print("수입사 : " + importer)
             elif producer_text is None and importer_text is None and distributor_text is not None:
                 distributor = agency_text
-                print("배급사 : " + distributor)
+                #print("배급사 : " + distributor)
             else:
                 print("정보 없음")
         except NoSuchElementException:
@@ -190,8 +190,8 @@ class Parsing:
             expectateIndex = driver.find_element_by_class_name("exp_info")
             like = expectateIndex.text.split('\n')[0]
             dislike = expectateIndex.text.split('\n')[1]
-            print("보고싶어요 : " + like)
-            print("글쎄요 : " + dislike)
+            #print("보고싶어요 : " + like)
+            #print("글쎄요 : " + dislike)
             return_before_score_list.append(like)
             return_before_score_list.append(dislike)
             
@@ -199,13 +199,14 @@ class Parsing:
             star_score_text = driver.find_element_by_id("beforePointArea")
             star_score = star_score_text.text.split('\n')[3]
             before_participator = star_score_text.text.split('\n')[4]
-            print("개봉 전 네티즌 평점 : " + star_score)
-            print("참여자 수 : " + before_participator.replace("참여", ""))
+            #print("개봉 전 네티즌 평점 : " + star_score)
+            #print("참여자 수 : " + before_participator.replace("참여", ""))
+            temp = before_participator.replace("참여 ","")
             return_before_score_list.append(star_score)
-            return_before_score_list.append(before_participator.replace("참여", ""))
+            return_before_score_list.append(temp.replace("명",""))
   
         except:
-            print("개봉 전 정보 없음")
+            #print("개봉 전 정보 없음")
             return_before_score_list.append(None)
             return_before_score_list.append(None)
             return_before_score_list.append(None)
@@ -225,13 +226,13 @@ class Parsing:
             netizen_score = netizen_score_all.text.split('\n')[0]
             after_participator_netizen = netizen_score_all.text.split('\n')[1]
             
-            print("개봉 후 네티즌 평점 : " + netizen_score)
-            print("네티즌 평점 참여자 수 : " + after_participator_netizen)
+            #print("개봉 후 네티즌 평점 : " + netizen_score)
+            #print("네티즌 평점 참여자 수 : " + after_participator_netizen)
             
             score.append(netizen_score)
             score.append(after_participator_netizen)
         except:
-            print("개봉 후 네티즌 평점 정보 없음")
+            #print("개봉 후 네티즌 평점 정보 없음")
             score.append(None)
                    
         try:
@@ -260,13 +261,13 @@ class Parsing:
             for index in range(0, len(netizen_score_graph_list)):
                 netizen_score_graph_list[index] = netizen_score_graph_list[index].replace("%", "")
             
-            print(netizen_score_graph_list)
-            print("선호하는 그룹(네티즌) : " +netizen_score_favorite_group)  
+            #print(netizen_score_graph_list)
+            #print("선호하는 그룹(네티즌) : " +netizen_score_favorite_group)  
             
             point.append(netizen_score_graph_list)
             point.append(netizen_score_favorite_group)
         except:
-            print("네티즌 평점 막대 그래프 정보 없음")
+            #print("네티즌 평점 막대 그래프 정보 없음")
             point.append(None)
             
         return_after_score_list.append(score)
@@ -286,13 +287,13 @@ class Parsing:
             audience_score = audience_score_all.text.split('\n')[0]
             after_participator_audience = audience_score_all.text.split('\n')[1]
             
-            print("개봉 후 관람객 평점 : " + audience_score)
-            print("관람객 평점 참여자 수 : " + after_participator_audience)
+            #print("개봉 후 관람객 평점 : " + audience_score)
+            #print("관람객 평점 참여자 수 : " + after_participator_audience)
             
             score.append(audience_score)
             score.append(after_participator_audience)
         except:
-            print("개봉 후 관람객 평점 정보 없음")
+            #print("개봉 후 관람객 평점 정보 없음")
             score.append(None)
             
         try:
@@ -321,14 +322,14 @@ class Parsing:
             for index in range(0, len(audience_score_graph_list)):
                 audience_score_graph_list[index] = audience_score_graph_list[index].replace("%", "")
             
-            print(audience_score_graph_list)
-            print("선호하는 그룹(관람객) : " + audience_score_favorite_group)  
+            #print(audience_score_graph_list)
+            #print("선호하는 그룹(관람객) : " + audience_score_favorite_group)  
             
             point.append(audience_score_graph_list)
             point.append(audience_score_favorite_group)
     
         except:
-            print("관람객 평점 막대 그래프 정보 없음")
+            #print("관람객 평점 막대 그래프 정보 없음")
             point.append(None)
             
         return_audience_score_list.append(score)
@@ -368,8 +369,8 @@ class Parsing:
             gender_score_star_score.append(male_score) #남자 평점
             gender_score_star_score.append(female_score) #여자 평점
             
-            print(gender_score_participation_rate)
-            print(gender_score_star_score)
+            #print(gender_score_participation_rate)
+            #print(gender_score_star_score)
             
             gender_score.append(gender_score_participation_rate)
             gender_score.append(gender_score_star_score)
@@ -385,18 +386,18 @@ class Parsing:
                 if index % 2 != 0 :
                     age_score_star_score.append(age_score_star_score_temp[index].replace("평점 ", ""))#'평점' 제거          
         
-            print(age_score_star_score)
+            #print(age_score_star_score)
             age_score.append(age_score_star_score)
             
             #연령대 참여율 리스트 데이터 채우기(10대, 20대, 30대, 40대 이상 순)
             for index in range(15, 19):
                 age_score_participation_rate.append(gender_score_graph[index].replace("%", ""))#'%' 제거
             
-            print(age_score_participation_rate)
+            #print(age_score_participation_rate)
             age_score.append(age_score_participation_rate)
     
         except:
-            print("남녀별, 연령별 평점 정보 없음")
+            #print("남녀별, 연령별 평점 정보 없음")
             gender_score.append(None)
             age_score.append(None)
             
@@ -439,8 +440,8 @@ class Parsing:
             gender_score_star_score.append(male_score) #남자 평점
             gender_score_star_score.append(female_score) #여자 평점
             
-            print(gender_score_participation_rate)
-            print(gender_score_star_score)
+            #print(gender_score_participation_rate)
+            #print(gender_score_star_score)
             
             gender_score.append(gender_score_participation_rate)
             gender_score.append(gender_score_star_score)
@@ -456,7 +457,7 @@ class Parsing:
                 if index % 2 != 0 :
                     age_score_star_score.append(age_score_star_score_temp[index].replace("평점 ", ""))#'평점' 제거          
         
-            print(age_score_star_score)
+            #print(age_score_star_score)
             
             age_score.append(age_score_star_score)
             
@@ -464,11 +465,11 @@ class Parsing:
             for index in range(15, 19):
                 age_score_participation_rate.append(gender_score_graph[index].replace("%", ""))#'%' 제거
             
-            print(age_score_participation_rate)
+            #print(age_score_participation_rate)
             age_score.append(age_score_participation_rate)
             
         except:
-            print("남녀별, 연령별 평점 정보 없음")
+            #print("남녀별, 연령별 평점 정보 없음")
             gender_score.append(None)
             age_score.append(None)
         
