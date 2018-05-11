@@ -404,7 +404,7 @@ class Parsing:
                     male_rate = "100"
                     
                     female_score = "0.00"
-                    male_score = gender_score_graph[score_index-2].replace("평점 ","")
+                    male_score = gender_score_graph[score_index-3].replace("평점 ","")
                     
                 gender_score_participation_rate.append(male_rate) #남자 참여율
                 gender_score_participation_rate.append(female_rate) #여자 참여율
@@ -570,7 +570,7 @@ class Parsing:
                     male_rate = "100"
                     
                     female_score = "0.00"
-                    male_score = gender_score_graph[score_index-2].replace("평점 ","")
+                    male_score = gender_score_graph[score_index-3].replace("평점 ","")
                     
                 gender_score_participation_rate.append(male_rate) #남자 참여율
                 gender_score_participation_rate.append(female_rate) #여자 참여율
