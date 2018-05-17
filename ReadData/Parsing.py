@@ -240,7 +240,7 @@ class Parsing:
             netizen_score_graph_text = driver.find_element_by_id("netizen_point_graph")
             netizen_score_graph = netizen_score_graph_text.text.split("\n")
             
-            print(netizen_score_graph)
+            #print(netizen_score_graph)
             #점수 분포 리스트
             netizen_score_graph_list = []
             
@@ -355,15 +355,13 @@ class Parsing:
             gender_score_text = driver.find_element_by_id("netizen_group_graph")
             gender_score_graph = gender_score_text.text.split('\n')
             
-            del gender_score_graph[-1]
+            print(gender_score_graph)
             
             #남녀 참여율 리스트
             gender_score_participation_rate = []
             #남녀 평점 리스트
             gender_score_star_score = []
             
-            #연령별 참여율 리스트
-            age_score_participation_rate = []
             #연령별 평점 리스트
             age_score_star_score = []   
                  
@@ -392,6 +390,9 @@ class Parsing:
             
             #남녀 참여율 리스트 데이터 채우기
             if participate_rate_index < 2:
+                #연령별 참여율 리스트
+                age_score_participation_rate = ["0","0","0","0"]
+
                 if gender_score_graph[score_index] == "남자":
                     male_rate = "0"
                     female_rate = "100"
@@ -425,38 +426,72 @@ class Parsing:
                 #print(age_score_star_score)
                 age_score.append(age_score_star_score)
                 
+                #필요없는 데이터 제거
+                removeData = 0
+                for index in range(age+8, len(gender_score_graph)):
+                    if gender_score_graph[index].find("한줄분석") != -1:
+                        removeData += 1
+                
+                if removeData == 1 :
+                    del gender_score_graph[-1]
+                    del gender_score_graph[-1]
+                    del gender_score_graph[-1]
+                else :
+                    del gender_score_graph[-1]
+                        
                 #참여율 개수 검사
                 temp = 0
-                
+                temp2 = []
+
+                #연령별 참여율 데이터 temp2에 저장
                 for index in range(age+8, len(gender_score_graph)):
                     temp += 1
-                    
+                    temp2.append(gender_score_graph[index])
+                     
+                #temp의 개수에 따라 연령별 참여율 리스트 만들기
                 if temp == 1:
                     for index in range(age, age+8):
                         if gender_score_graph[index].find("평점 0.00") == -1 and gender_score_graph[index].find("대") == -1:
                             if index == age + 1:
-                                age_score_participation_rate.append("100")
-                                age_score_participation_rate.append("0")
-                                age_score_participation_rate.append("0")
-                                age_score_participation_rate.append("0")
+                                age_score_participation_rate[0] = "100"
                             elif index == age + 3:
-                                age_score_participation_rate.append("0")
-                                age_score_participation_rate.append("100")
-                                age_score_participation_rate.append("0")
-                                age_score_participation_rate.append("0")
+                                age_score_participation_rate[1] = "100"
                             elif index == age + 5:
-                                age_score_participation_rate.append("0")
-                                age_score_participation_rate.append("0")
-                                age_score_participation_rate.append("100")
-                                age_score_participation_rate.append("0")  
+                                age_score_participation_rate[2] = "100"  
                             else:
-                                age_score_participation_rate.append("0")
-                                age_score_participation_rate.append("0")
-                                age_score_participation_rate.append("0")
-                                age_score_participation_rate.append("100")  
+                                age_score_participation_rate[3] = "100"  
+                elif temp == 2 :
+                    i = 0
+                    j = 0
+                    print(gender_score_graph[age:age+8])
+                    for index in range(age, age+8):
+                        if index % 2 != 0 :
+                            i += 1
+                            if gender_score_graph[index].find("평점 0.00") == -1:
+                                j += 1
+                                age_score_participation_rate[i-1] = temp2[j-1].replace("%", "")
+                                print(temp2[j-1])
+                                
+                elif temp == 3 :
+                    i = 0
+                    j = 0
+                    for index in range(age, age+8):
+                        if index % 2 != 0 :
+                            i += 1
+                            if gender_score_graph[index].find("평점 0.00") == -1:
+                                j += 1
+                                age_score_participation_rate[i-1] = temp2[j-1].replace("%", "")
                 
+                else :
+                    del age_score_participation_rate[0:4]
+                    for index in range(age, age+8):
+                        age_score_participation_rate.append(gender_score_graph[index].replace("%", ""))#'%' 제거
+ 
                 age_score.append(age_score_participation_rate)
             else :
+                #연령별 참여율 리스트
+                age_score_participation_rate = ["0","0","0","0"]
+
                 male_rate = gender_score_graph[0].replace("%", "") # '%' 제거
                 female_rate = gender_score_graph[1].replace("%", "") # '%' 제거              
                 
@@ -483,25 +518,73 @@ class Parsing:
                 #print(age_score_star_score)
                 age_score.append(age_score_star_score)
                 
-                #연령대 참여율 리스트 데이터 채우기(10대, 20대, 30대, 40대 이상 순)
-                for index in range(15, 19):
-                    age_score_participation_rate.append(gender_score_graph[index].replace("%", ""))#'%' 제거
+                age = return_age()
                 
-                #print(age_score_participation_rate)
-                age_score.append(age_score_participation_rate)                
-            
-#             print(male_rate)
-#             print(female_rate)
-#             print(male_score)
-#             print(female_score)
-#              
-#             print(gender_score_participation_rate)
-#             print(gender_score_star_score)
+                #필요없는 데이터 제거
+                removeData = 0
+                for index in range(age+8, len(gender_score_graph)):
+                    if gender_score_graph[index].find("한줄분석") != -1:
+                        removeData += 1
+                
+                if removeData == 1 :
+                    del gender_score_graph[-1]
+                    del gender_score_graph[-1]
+                    del gender_score_graph[-1]
+                else :
+                    del gender_score_graph[-1]
+                        
+                #참여율 개수 검사
+                temp = 0
+                temp2 = []
+
+                #연령별 참여율 데이터 temp2에 저장
+                for index in range(age+8, len(gender_score_graph)):
+                    temp += 1
+                    temp2.append(gender_score_graph[index])
+                     
+                #temp의 개수에 따라 연령별 참여율 리스트 만들기
+                if temp == 1:
+                    for index in range(age, age+8):
+                        if gender_score_graph[index].find("평점 0.00") == -1 and gender_score_graph[index].find("대") == -1:
+                            if index == age + 1:
+                                age_score_participation_rate[0] = "100"
+                            elif index == age + 3:
+                                age_score_participation_rate[1] = "100"
+                            elif index == age + 5:
+                                age_score_participation_rate[2] = "100"  
+                            else:
+                                age_score_participation_rate[3] = "100"  
+                elif temp == 2 :
+                    i = 0
+                    j = 0
+                    for index in range(age, age+8):
+                        if index % 2 == 0 :
+                            i += 1
+                            if gender_score_graph[index].find("평점 0.00") == -1:
+                                j += 1
+                                age_score_participation_rate[i-1] = temp2[j-1].replace("%", "")
+   
+                elif temp == 3 :
+                    i = 0
+                    j = 0
+                    for index in range(age, age+8):
+                        if index % 2 == 0 :
+                            i += 1
+                            if gender_score_graph[index].find("평점 0.00") == -1:
+                                j += 1
+                                age_score_participation_rate[i-1] = temp2[j-1].replace("%", "")
+
+                else:    
+                #연령대 참여율 리스트 데이터 채우기(10대, 20대, 30대, 40대 이상 순)
+                    print(gender_score_graph)
+                    del age_score_participation_rate[0:4]
+                    for index in range(15, 19):
+                        age_score_participation_rate.append(gender_score_graph[index].replace("%", ""))#'%' 제거
+                     
+                age_score.append(age_score_participation_rate)
              
             gender_score.append(gender_score_participation_rate)
             gender_score.append(gender_score_star_score)
-            
-#            print(gender_score)
     
         except:
             #print("남녀별, 연령별 평점 정보 없음")
@@ -529,8 +612,6 @@ class Parsing:
             #남녀 평점 리스트
             gender_score_star_score = []
             
-            #연령별 참여율 리스트
-            age_score_participation_rate = []
             #연령별 평점 리스트
             age_score_star_score = []
             
@@ -558,6 +639,8 @@ class Parsing:
             
             #남녀 참여율 리스트 데이터 채우기
             if participate_rate_index < 2:
+                #연령별 참여율 리스트
+                age_score_participation_rate = ["0","0","0","0"]
                 if gender_score_graph[score_index] == "남자":
                     male_rate = "0"
                     female_rate = "100"
@@ -591,38 +674,72 @@ class Parsing:
                 #print(age_score_star_score)
                 age_score.append(age_score_star_score)
                 
+                #필요없는 데이터 제거
+                removeData = 0
+                for index in range(age+8, len(gender_score_graph)):
+                    if gender_score_graph[index].find("한줄분석") != -1:
+                        removeData += 1
+                
+                if removeData == 1 :
+                    del gender_score_graph[-1]
+                    del gender_score_graph[-1]
+                    del gender_score_graph[-1]
+                else :
+                    del gender_score_graph[-1]
+                        
                 #참여율 개수 검사
                 temp = 0
-                
+                temp2 = []
+
+                #연령별 참여율 데이터 temp2에 저장
                 for index in range(age+8, len(gender_score_graph)):
                     temp += 1
-                    
+                    temp2.append(gender_score_graph[index])
+                     
+                #temp의 개수에 따라 연령별 참여율 리스트 만들기
                 if temp == 1:
                     for index in range(age, age+8):
                         if gender_score_graph[index].find("평점 0.00") == -1 and gender_score_graph[index].find("대") == -1:
                             if index == age + 1:
-                                age_score_participation_rate.append("100")
-                                age_score_participation_rate.append("0")
-                                age_score_participation_rate.append("0")
-                                age_score_participation_rate.append("0")
+                                age_score_participation_rate[0] = "100"
                             elif index == age + 3:
-                                age_score_participation_rate.append("0")
-                                age_score_participation_rate.append("100")
-                                age_score_participation_rate.append("0")
-                                age_score_participation_rate.append("0")
+                                age_score_participation_rate[1] = "100"
                             elif index == age + 5:
-                                age_score_participation_rate.append("0")
-                                age_score_participation_rate.append("0")
-                                age_score_participation_rate.append("100")
-                                age_score_participation_rate.append("0")  
+                                age_score_participation_rate[2] = "100"  
                             else:
-                                age_score_participation_rate.append("0")
-                                age_score_participation_rate.append("0")
-                                age_score_participation_rate.append("0")
-                                age_score_participation_rate.append("100")  
+                                age_score_participation_rate[3] = "100"  
+                elif temp == 2 :
+                    i = 0
+                    j = 0
+                    print(gender_score_graph)
+                    print(gender_score_graph[age:age+8])
+                    for index in range(age, age+8):
+                        if index % 2 != 0 :
+                            i += 1
+                            if gender_score_graph[index].find("평점 0.00") == -1:
+                                j += 1
+                                age_score_participation_rate[i-1] = temp2[j-1].replace("%", "")
+                                
+                elif temp == 3 :
+                    i = 0
+                    j = 0
+                    for index in range(age, age+8):
+                        if index % 2 != 0 :
+                            i += 1
+                            if gender_score_graph[index].find("평점 0.00") == -1:
+                                j += 1
+                                age_score_participation_rate[i-1] = temp2[j-1].replace("%", "")
                 
+                else :
+                    del age_score_participation_rate[0:4]
+                    for index in range(age, age+8):
+                        age_score_participation_rate.append(gender_score_graph[index].replace("%", ""))#'%' 제거
+ 
                 age_score.append(age_score_participation_rate)
             else :
+                #연령별 참여율 리스트
+                age_score_participation_rate = ["0","0","0","0"]
+
                 male_rate = gender_score_graph[0].replace("%", "") # '%' 제거
                 female_rate = gender_score_graph[1].replace("%", "") # '%' 제거              
                 
@@ -649,25 +766,72 @@ class Parsing:
                 #print(age_score_star_score)
                 age_score.append(age_score_star_score)
                 
-                #연령대 참여율 리스트 데이터 채우기(10대, 20대, 30대, 40대 이상 순)
-                for index in range(15, 19):
-                    age_score_participation_rate.append(gender_score_graph[index].replace("%", ""))#'%' 제거
+                age = return_age()
                 
-                #print(age_score_participation_rate)
-                age_score.append(age_score_participation_rate)                
-            
-            #print(male_rate)
-            #print(female_rate)
-            #print(male_score)
-            #print(female_score)
-              
-            #print(gender_score_participation_rate)
-            #print(gender_score_star_score)
+                #필요없는 데이터 제거
+                removeData = 0
+                for index in range(age+8, len(gender_score_graph)):
+                    if gender_score_graph[index].find("한줄분석") != -1:
+                        removeData += 1
+                
+                if removeData == 1 :
+                    del gender_score_graph[-1]
+                    del gender_score_graph[-1]
+                    del gender_score_graph[-1]
+                else :
+                    del gender_score_graph[-1]
+                        
+                #참여율 개수 검사
+                temp = 0
+                temp2 = []
+
+                #연령별 참여율 데이터 temp2에 저장
+                for index in range(age+8, len(gender_score_graph)):
+                    temp += 1
+                    temp2.append(gender_score_graph[index])
+                     
+                #temp의 개수에 따라 연령별 참여율 리스트 만들기
+                if temp == 1:
+                    for index in range(age, age+8):
+                        if gender_score_graph[index].find("평점 0.00") == -1 and gender_score_graph[index].find("대") == -1:
+                            if index == age + 1:
+                                age_score_participation_rate[0] = "100"
+                            elif index == age + 3:
+                                age_score_participation_rate[1] = "100"
+                            elif index == age + 5:
+                                age_score_participation_rate[2] = "100"  
+                            else:
+                                age_score_participation_rate[3] = "100"  
+                elif temp == 2 :
+                    i = 0
+                    j = 0
+                    for index in range(age, age+8):
+                        if index % 2 == 0 :
+                            i += 1
+                            if gender_score_graph[index].find("평점 0.00") == -1:
+                                j += 1
+                                age_score_participation_rate[i-1] = temp2[j-1].replace("%", "")
+   
+                elif temp == 3 :
+                    i = 0
+                    j = 0
+                    for index in range(age, age+8):
+                        if index % 2 == 0 :
+                            i += 1
+                            if gender_score_graph[index].find("평점 0.00") == -1:
+                                j += 1
+                                age_score_participation_rate[i-1] = temp2[j-1].replace("%", "")
+
+                else:    
+                #연령대 참여율 리스트 데이터 채우기(10대, 20대, 30대, 40대 이상 순)
+                    del age_score_participation_rate[0:4]
+                    for index in range(15, 19):
+                        age_score_participation_rate.append(gender_score_graph[index].replace("%", ""))#'%' 제거
+                     
+                age_score.append(age_score_participation_rate)
              
             gender_score.append(gender_score_participation_rate)
             gender_score.append(gender_score_star_score)
-            
-            #print(gender_score)
     
         except:
             #print("남녀별, 연령별 평점 정보 없음")
