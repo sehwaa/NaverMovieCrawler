@@ -68,7 +68,7 @@ class Execute:
             self.director = summary[4]
             self.grade = summary[5]
             self.audience = summary[6]
-            
+#             
             print("----------------------------------------------")
             print("장르 : " + str(self.genre))
             print("러닝타임 : " + str(self.runningTime))
@@ -248,6 +248,10 @@ class Execute:
                 print(ex)
                 pass
         except Exception as ex:
+            print("영화이름 : " + movie_name)
             clear()
             print(ex)
+            f = open("E:/공모전/staleelement/movielist.xls", 'a')
+            f.write(movie_name)
+            f.write('\n')
             pass
