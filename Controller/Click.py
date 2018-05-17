@@ -50,3 +50,11 @@ def audienceScore():
 #'관람객 평점' 탭 클릭 후 '남녀별/연령별' 메뉴 클릭
 def audienceGenderAndAge():
     driver.find_element_by_xpath("//a[@id='actual_group']").click()
+    
+#성인 인증시 로그인
+def adultLogin():
+    _id = driver.find_element_by_id("id")
+    _id.send_keys("####") #개인정보 문제로 블락
+    _pwd = driver.find_element_by_id("pw")
+    _pwd.send_keys("####") #개인정보 문제로 블락
+    driver.find_element_by_xpath("//input[@type='submit']").click()
