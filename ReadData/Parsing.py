@@ -463,7 +463,6 @@ class Parsing:
                 elif temp == 2 :
                     i = 0
                     j = 0
-                    print(gender_score_graph[age:age+8])
                     for index in range(age, age+8):
                         if index % 2 != 0 :
                             i += 1
@@ -484,7 +483,7 @@ class Parsing:
                 
                 else :
                     del age_score_participation_rate[0:4]
-                    for index in range(age, age+8):
+                    for index in range(14, 18):
                         age_score_participation_rate.append(gender_score_graph[index].replace("%", ""))#'%' 제거
  
                 age_score.append(age_score_participation_rate)
@@ -732,7 +731,7 @@ class Parsing:
                 
                 else :
                     del age_score_participation_rate[0:4]
-                    for index in range(age, age+8):
+                    for index in range(14, 18):
                         age_score_participation_rate.append(gender_score_graph[index].replace("%", ""))#'%' 제거
  
                 age_score.append(age_score_participation_rate)
